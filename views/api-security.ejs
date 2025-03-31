@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JazS - API Security</title>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  .api-security-container {
+    padding: 20px;
+  }
+  
+  .api-security-info {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+  }
+  
+  .api-security-scan {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+  }
+  
+  .api-endpoints {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+  }
+  
+  .endpoint-item {
+    background-color: var(--bg-tertiary);
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .endpoint-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .endpoint-path {
+    font-weight: 500;
+    font-family: monospace;
+  }
+  
+  .endpoint-method {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  
+  .endpoint-method.get {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .endpoint-method.post {
+    background-color: #2196f3;
+    color: white;
+  }
+  
+  .endpoint-method.put {
+    background-color: #ff9800;
+    color: white;
+  }
+  
+  .endpoint-method.delete {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .endpoint-details {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .endpoint-detail {
+    font-size: 0.9rem;
+  }
+  
+  .endpoint-vulnerabilities {
+    margin-top: 10px;
+  }
+  
+  .vulnerability-item {
+    background-color: var(--bg-primary);
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 5px;
+  }
+  
+  .vulnerability-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .vulnerability-type {
+    font-weight: 500;
+  }
+  
+  .vulnerability-severity {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+  
+  .vulnerability-severity.high {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .vulnerability-severity.medium {
+    background-color: #ff9800;
+    color: white;
+  }
+  
+  .vulnerability-severity.low {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .scan-form {
+    margin-top: 15px;
+  }
+  
+  .scan-results {
+    margin-top: 20px;
+    display: none;
+  }
+  
+  .scan-results.active {
+    display: block;
+  }
+  
+  .results-summary {
+    background-color: var(--bg-tertiary);
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .results-findings {
+    margin-bottom: 15px;
+  }
+  
+  .results-recommendations {
+    background-color: var(--bg-tertiary);
+    border-radius: 6px;
+    padding: 15px;
+  }
+  
+  .results-recommendations ul {
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+</style>
+</head>
+<body>
+<div class="app-container">
+  <nav class="sidebar">
+    <div class="logo">
+      <span class="logo-text">JazS</span>
+      <div class="logo-icon">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="/dashboard">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dashboard#scan">
+          <i class="fas fa-search"></i>
+          <span>Scan</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dashboard#reports">
+          <i class="fas fa-file-alt"></i>
+          <span>Reports</span>
+        </a>
+      </li>
+      <li class="active">
+        <a href="/api-security">
+          <i class="fas fa-plug"></i>
+          <span>API Security</span>
+        </a>
+      </li>
+      <li>
+        <a href="/shadow-data">
+          <i class="fas fa-eye-slash"></i>
+          <span>Shadow Data</span>
+        </a>
+      </li>
+      <li>
+        <a href="/settings">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li class="logout">
+        <a href="#" id="logout-link">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  
+  <main class="content">
+    <header>
+      <div class="header-content">
+        <h1>API Security</h1>
+        <div class="user-info">
+          <span>Welcome, <%= user.username %></span>
+          <span class="company-badge"><%= user.company %></span>
+        </div>
+      </div>
+    </header>
+    
+    <div class="api-security-container">
+      <div class="api-security-info">
+        <h2>API Security Testing</h2>
+        <p>This module helps you identify security vulnerabilities in your API endpoints, including:</p>
+        <ul>
+          <li>Authentication flaws</li>
+          <li>Authorization bypass vulnerabilities</li>
+          <li>Rate limiting issues</li>
+          <li>Input validation problems</li>
+          <li>Data exposure risks</li>
+        </ul>
+      </div>
+      
+      <div class="api-security-scan">
+        <h2>API Security Scanner</h2>
+        <p>Enter an API endpoint URL to scan for security vulnerabilities:</p>
+        
+        <form id="api-scan-form" class="scan-form">
+          <div class="form-group">
+            <label for="api-url">API URL</label>
+            <input type="url" id="api-url" placeholder="https://api.example.com/endpoint" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="api-method">Method</label>
+            <select id="api-method">
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="api-headers">Headers (Optional, JSON format)</label>
+            <textarea id="api-headers" rows="3" placeholder='{"Authorization": "Bearer token"}'></textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Scan API Endpoint</button>
+        </form>
+        
+        <div id="scan-results" class="scan-results">
+          <h3>Scan Results</h3>
+          
+          <div class="results-summary">
+            <div><strong>URL:</strong> <span id="result-url"></span></div>
+            <div><strong>Method:</strong> <span id="result-method"></span></div>
+            <div><strong>Timestamp:</strong> <span id="result-timestamp"></span></div>
+          </div>
+          
+          <div class="results-findings">
+            <h4>Findings</h4>
+            <div id="result-findings"></div>
+          </div>
+          
+          <div class="results-recommendations">
+            <h4>Recommendations</h4>
+            <ul id="result-recommendations"></ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="api-endpoints">
+        <h2>Detected API Endpoints</h2>
+        <div id="endpoints-list"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Load API endpoints
+  loadApiEndpoints();
+  
+  // API Scan form
+  const apiScanForm = document.getElementById("api-scan-form");
+  const scanResults = document.getElementById("scan-results");
+  
+  if (apiScanForm) {
+    apiScanForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const apiUrlElement = document.getElementById("api-url");
+      const apiMethodElement = document.getElementById("api-method");
+      const apiHeadersElement = document.getElementById("api-headers");
+      
+      if (!apiUrlElement) {
+        console.error("API URL element not found");
+        return;
+      }
+      
+      const apiUrl = apiUrlElement.value;
+      const apiMethod = apiMethodElement ? apiMethodElement.value : "GET";
+      let apiHeaders = {};
+      
+      if (apiHeadersElement && apiHeadersElement.value.trim()) {
+        try {
+          apiHeaders = JSON.parse(apiHeadersElement.value);
+        } catch (err) {
+          alert("Invalid JSON format for headers");
+          return;
+        }
+      }
+      
+      try {
+        // Show loading state
+        const submitBtn = apiScanForm.querySelector("button[type='submit']");
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Scanning...";
+        
+        const response = await fetch("/api-security/scan", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            url: apiUrl,
+            method: apiMethod,
+            headers: apiHeaders
+          }),
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success && data.results) {
+          displayScanResults(data.results);
+          scanResults.classList.add("active");
+        } else {
+          alert(data.message || "Scan failed");
+        }
+        
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      } catch (err) {
+        console.error("Error during API scan:", err);
+        alert("An error occurred during the scan. Please try again.");
+        
+        // Reset button state
+        const submitBtn = apiScanForm.querySelector("button[type='submit']");
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Scan API Endpoint";
+        }
+      }
+    });
+  }
+  
+  // Display scan results
+  function displayScanResults(results) {
+    const resultUrl = document.getElementById("result-url");
+    const resultMethod = document.getElementById("result-method");
+    const resultTimestamp = document.getElementById("result-timestamp");
+    const resultFindings = document.getElementById("result-findings");
+    const resultRecommendations = document.getElementById("result-recommendations");
+    
+    if (!resultUrl || !resultMethod || !resultTimestamp || !resultFindings || !resultRecommendations) {
+      console.error("Result elements not found");
+      return;
+    }
+    
+    resultUrl.textContent = results.url;
+    resultMethod.textContent = results.method;
+    resultTimestamp.textContent = new Date(results.timestamp).toLocaleString();
+    
+    // Display findings
+    resultFindings.innerHTML = "";
+    
+    if (!results.findings || results.findings.length === 0) {
+      resultFindings.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-check-circle"></i>
+          <p>No vulnerabilities detected</p>
+        </div>
+      `;
+    } else {
+      results.findings.forEach((finding) => {
+        const findingItem = document.createElement("div");
+        findingItem.className = "vulnerability-item";
+        
+        findingItem.innerHTML = `
+          <div class="vulnerability-header">
+            <div class="vulnerability-type">${finding.type}</div>
+            <div class="vulnerability-severity ${finding.severity.toLowerCase()}">${finding.severity}</div>
+          </div>
+          <div class="vulnerability-description">${finding.description}</div>
+        `;
+        
+        resultFindings.appendChild(findingItem);
+      });
+    }
+    
+    // Display recommendations
+    resultRecommendations.innerHTML = "";
+    
+    if (results.recommendations && results.recommendations.length > 0) {
+      results.recommendations.forEach((recommendation) => {
+        const li = document.createElement("li");
+        li.textContent = recommendation;
+        resultRecommendations.appendChild(li);
+      });
+    } else {
+      resultRecommendations.innerHTML = "<li>No specific recommendations available</li>";
+    }
+  }
+  
+  // Load API endpoints
+  async function loadApiEndpoints() {
+    const endpointsList = document.getElementById("endpoints-list");
+    
+    if (!endpointsList) {
+      console.error("Endpoints list element not found");
+      return;
+    }
+    
+    try {
+      const response = await fetch("/api-security/endpoints");
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const endpoints = await response.json();
+      
+      if (endpoints.length === 0) {
+        endpointsList.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-plug"></i>
+            <p>No API endpoints detected</p>
+          </div>
+        `;
+        return;
+      }
+      
+      endpointsList.innerHTML = "";
+      
+      endpoints.forEach((endpoint) => {
+        const endpointItem = document.createElement("div");
+        endpointItem.className = "endpoint-item";
+        
+        const methodClass = endpoint.method.toLowerCase();
+        
+        endpointItem.innerHTML = `
+          <div class="endpoint-header">
+            <div class="endpoint-path">${endpoint.path}</div>
+            <div class="endpoint-method ${methodClass}">${endpoint.method}</div>
+          </div>
+          <div class="endpoint-details">
+            <div class="endpoint-detail"><strong>Auth:</strong> ${endpoint.auth}</div>
+            <div class="endpoint-detail"><strong>Rate Limit:</strong> ${endpoint.rateLimit ? "Yes" : "No"}</div>
+          </div>
+        `;
+        
+        // Add vulnerabilities if any
+        if (endpoint.vulnerabilities && endpoint.vulnerabilities.length > 0) {
+          const vulnContainer = document.createElement("div");
+          vulnContainer.className = "endpoint-vulnerabilities";
+          
+          endpoint.vulnerabilities.forEach((vuln) => {
+            const vulnItem = document.createElement("div");
+            vulnItem.className = "vulnerability-item";
+            
+            vulnItem.innerHTML = `
+              <div class="vulnerability-header">
+                <div class="vulnerability-type">${vuln.type}</div>
+                <div class="vulnerability-severity ${vuln.severity.toLowerCase()}">${vuln.severity}</div>
+              </div>
+              <div class="vulnerability-description">${vuln.description}</div>
+            `;
+            
+            vulnContainer.appendChild(vulnItem);
+          });
+          
+          endpointItem.appendChild(vulnContainer);
+        }
+        
+        endpointsList.appendChild(endpointItem);
+      });
+    } catch (err) {
+      console.error("Error loading API endpoints:", err);
+      endpointsList.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-exclamation-circle"></i>
+          <p>Error loading API endpoints</p>
+        </div>
+      `;
+    }
+  }
+  
+  // Logout
+  const logoutLink = document.getElementById("logout-link");
+  if (logoutLink) {
+    logoutLink.addEventListener("click", async (e) => {
+      e.preventDefault();
+      
+      try {
+        const response = await fetch("/auth/logout");
+        
+        if (!response.ok) {
+          throw new Error(`Logout failed: ${response.status} ${response.statusText}`);
+        }
+        
+        window.location.href = "/";
+      } catch (err) {
+        console.error("Error during logout:", err);
+        window.location.href = "/";
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>
+

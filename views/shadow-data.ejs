@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JazS - Shadow Data Detection</title>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+<link rel="stylesheet" href="/css/shadow-data.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<div class="app-container">
+  <nav class="sidebar">
+    <div class="logo">
+      <span class="logo-text">JazS</span>
+      <div class="logo-icon">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="/dashboard">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dashboard#scan">
+          <i class="fas fa-search"></i>
+          <span>Scan</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dashboard#reports">
+          <i class="fas fa-file-alt"></i>
+          <span>Reports</span>
+        </a>
+      </li>
+      <li>
+        <a href="/api-security">
+          <i class="fas fa-plug"></i>
+          <span>API Security</span>
+        </a>
+      </li>
+      <li class="active">
+        <a href="/shadow-data">
+          <i class="fas fa-eye-slash"></i>
+          <span>Shadow Data</span>
+        </a>
+      </li>
+      <li>
+        <a href="/settings">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li class="logout">
+        <a href="#" id="logout-link">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  
+  <main class="content">
+    <header>
+      <div class="header-content">
+        <h1>Shadow Data Detection</h1>
+        <div class="user-info">
+          <span>Welcome, <%= user.username %></span>
+          <span class="company-badge"><%= user.company %></span>
+        </div>
+      </div>
+    </header>
+    
+    <div class="shadow-data-container">
+      <div class="shadow-data-info">
+        <h2>What is Shadow Data?</h2>
+        <p>Shadow data refers to sensitive information that exists in your codebase, logs, or databases without proper oversight or protection. This can include:</p>
+        <ul>
+          <li><strong>Personal Identifiable Information (PII)</strong> - Names, emails, phone numbers, SSNs</li>
+          <li><strong>Financial Information</strong> - Credit card numbers, bank accounts</li>
+          <li><strong>Authentication Credentials</strong> - API keys, passwords, tokens</li>
+          <li><strong>Healthcare Information</strong> - Medical IDs, health insurance numbers</li>
+          <li><strong>Internal Network Information</strong> - IP addresses, internal URLs</li>
+        </ul>
+        <p>Our advanced detection engine uses machine learning and pattern matching to identify potential shadow data with high precision and recall.</p>
+      </div>
+      
+      <div class="shadow-data-scan">
+        <h2>Scan for Shadow Data</h2>
+        <form id="shadow-data-form">
+          <div class="form-group">
+            <label for="file-type">File Type</label>
+            <select id="file-type" required>
+              <option value="js">JavaScript</option>
+              <option value="php">PHP</option>
+              <option value="python">Python</option>
+              <option value="java">Java</option>
+              <option value="html">HTML</option>
+              <option value="css">CSS</option>
+              <option value="json">JSON</option>
+              <option value="xml">XML</option>
+              <option value="sql">SQL</option>
+              <option value="text">Plain Text</option>
+              <option value="config">Configuration File</option>
+              <option value="log">Log File</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="code-snippet">Code/Text to Scan</label>
+            <textarea id="code-snippet" rows="15" placeholder="Paste your code or text here..." required></textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Run Shadow Data Scan</button>
+        </form>
+      </div>
+      
+      <div id="scan-results" class="shadow-data-results hidden">
+        <h2>Scan Results</h2>
+        <div class="results-summary" id="results-summary"></div>
+        
+        <div class="results-details">
+          <h3>Detected Shadow Data</h3>
+          <div id="findings-list" class="findings-list"></div>
+        </div>
+        
+        <div class="results-actions">
+          <button id="download-report" class="btn btn-secondary">Download Report</button>
+          <button id="back-to-scan" class="btn btn-secondary">Back to Scan</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/shadow-data.js"></script>
+</body>
+</html>
+

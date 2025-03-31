@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JazS - Advanced Security Scanner</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="landing-container">
+    <div class="logo-container">
+      <div class="logo">
+        <span class="logo-text">JazS</span>
+        <div class="logo-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+      </div>
+      <p class="tagline">Advanced Security Scanning Solution</p>
+    </div>
+    
+    <div class="auth-container">
+      <div class="tabs">
+        <div class="tab active" data-tab="login">Login</div>
+        <div class="tab" data-tab="register">Register</div>
+      </div>
+      
+      <div class="tab-content">
+        <div class="tab-pane active" id="login">
+          <form id="login-form">
+            <div class="form-group">
+              <label for="login-email">Email</label>
+              <input type="email" id="login-email" required>
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <input type="password" id="login-password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+        </div>
+        
+        <div class="tab-pane" id="register">
+          <form id="register-form">
+            <div class="form-group">
+              <label for="register-username">Username</label>
+              <input type="text" id="register-username" required>
+            </div>
+            <div class="form-group">
+              <label for="register-email">Email</label>
+              <input type="email" id="register-email" required>
+            </div>
+            <div class="form-group">
+              <label for="register-password">Password</label>
+              <input type="password" id="register-password" required>
+            </div>
+            <div class="form-group">
+              <label for="register-company">Company</label>
+              <input type="text" id="register-company" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="features-section">
+    <h2>Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fas fa-search"></i>
+        <h3>Advanced Scanning</h3>
+        <p>Detect security vulnerabilities with precision</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-key"></i>
+        <h3>Customizable Keywords</h3>
+        <p>Define your own security keywords</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-file-alt"></i>
+        <h3>Detailed Reports</h3>
+        <p>Get comprehensive security reports</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-shield-alt"></i>
+        <h3>BOLA Detection</h3>
+        <p>Identify broken object level authorization</p>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <p>&copy; 2025 JazS Security. All rights reserved.</p>
+  </footer>
+  
+  <script src="/js/auth.js"></script>
+</body>
+</html>
+

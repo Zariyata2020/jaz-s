@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JazS - Settings</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/settings.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <nav class="sidebar">
+      <div class="logo">
+        <span class="logo-text">JazS</span>
+        <div class="logo-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="/dashboard">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/dashboard#scan">
+            <i class="fas fa-search"></i>
+            <span>Scan</span>
+          </a>
+        </li>
+        <li>
+          <a href="/dashboard#reports">
+            <i class="fas fa-file-alt"></i>
+            <span>Reports</span>
+          </a>
+        </li>
+        <li>
+          <a href="/api-security">
+            <i class="fas fa-plug"></i>
+            <span>API Security</span>
+          </a>
+        </li>
+        <li>
+          <a href="/shadow-data">
+            <i class="fas fa-eye-slash"></i>
+            <span>Shadow Data</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="/settings">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+        <li class="logout">
+          <a href="#" id="logout-link">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
+    <main class="content">
+      <header>
+        <div class="header-content">
+          <h1>Settings</h1>
+          <div class="user-info">
+            <span>Welcome, <%= user.username %></span>
+            <span class="company-badge"><%= user.company %></span>
+          </div>
+        </div>
+      </header>
+      
+      <div class="settings-container">
+        <div class="settings-sidebar">
+          <ul class="settings-nav">
+            <li data-section="profile" class="active">Profile</li>
+            <li data-section="appearance">Appearance</li>
+            <li data-section="keywords">Keywords</li>
+            <li data-section="notifications">Notifications</li>
+            <!-- <li data-section="api">API Keys</li> -->
+          </ul>
+        </div>
+        
+        <div class="settings-content">
+          <!-- Profile Section -->
+          <section id="profile-section" class="settings-section active">
+            <h2>Profile Settings</h2>
+            <form id="profile-form" class="settings-form">
+              <div class="form-group">
+                <label for="profile-username">Username</label>
+                <input type="text" id="profile-username" value="<%= user.username %>" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="profile-email">Email</label>
+                <input type="email" id="profile-email" value="<%= user.email %>" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="profile-company">Company</label>
+                <input type="text" id="profile-company" value="<%= user.company %>" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="profile-password">Password</label>
+                <input type="password" id="profile-password" placeholder="Leave blank to keep current password">
+              </div>
+              
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+          </section>
+          
+          <!-- Appearance Section -->
+          <section id="appearance-section" class="settings-section">
+            <h2>Appearance Settings</h2>
+            
+            <div class="settings-group">
+              <h3>Theme</h3>
+              <div class="theme-options">
+                <div class="theme-option active" data-theme="light">
+                  <div class="theme-preview light-theme"></div>
+                  <span>Light</span>
+                </div>
+                
+                <div class="theme-option" data-theme="dark">
+                  <div class="theme-preview dark-theme"></div>
+                  <span>Dark</span>
+                </div>
+                
+                <div class="theme-option" data-theme="blue">
+                  <div class="theme-preview blue-theme"></div>
+                  <span>Blue</span>
+                </div>
+                
+                <div class="theme-option" data-theme="green">
+                  <div class="theme-preview green-theme"></div>
+                  <span>Green</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="settings-group">
+              <h3>Animations</h3>
+              <div class="toggle-container">
+                <label class="toggle">
+                  <input type="checkbox" id="animations-toggle" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+                <span>Enable animations</span>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Keywords Section -->
+          <section id="keywords-section" class="settings-section">
+            <h2>Keywords Settings</h2>
+            
+            <div class="category-tabs">
+              <div class="category-tab active" data-category="bola">BOLA</div>
+              <div class="category-tab" data-category="shadow">Shadow Data</div>
+              <div class="category-tab" data-category="api">API Security</div>
+              <div class="category-tab" data-category="custom">Custom</div>
+            </div>
+            
+            <div class="keywords-container">
+              <div id="keywords-list" class="keywords-list">
+                <!-- Keywords will be loaded here -->
+              </div>
+              
+              <form id="add-keyword-form" class="add-keyword-form">
+                <input type="text" id="new-keyword" placeholder="Add new keyword..." required>
+                <input type="hidden" id="keyword-category" value="bola">
+                <button type="submit" class="btn btn-primary">Add</button>
+              </form>
+            </div>
+          </section>
+          
+          <!-- Notifications Section -->
+          <section id="notifications-section" class="settings-section">
+            <h2>Notification Settings</h2>
+            
+            <div class="settings-group">
+              <h3>Email Notifications</h3>
+              
+              <div class="toggle-container">
+                <label class="toggle">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+                <span>Scan completed</span>
+              </div>
+              
+              <div class="toggle-container">
+                <label class="toggle">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+                <span>Critical vulnerabilities</span>
+              </div>
+              
+              <div class="toggle-container">
+                <label class="toggle">
+                  <input type="checkbox">
+                  <span class="toggle-slider"></span>
+                </label>
+                <span>Weekly summary</span>
+              </div>
+            </div>
+            
+            <div class="settings-group">
+              <h3>In-App Notifications</h3>
+              
+              <div class="toggle-container">
+                <label class="toggle">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+                <span>All notifications</span>
+              </div>
+            </div>
+          </section>
+          
+          <!-- API Keys Section -->
+          <!-- <section id="api-section" class="settings-section">
+            <h2>API Keys</h2>
+            
+            <div class="api-key-container">
+              <div class="api-key">
+                <div class="api-key-info">
+                  <h3>JazS API Key</h3>
+                  <div class="api-key-value">••••••••••••••••••••••••••</div>
+                  <span class="api-key-status active">Active</span>
+                </div>
+                <div class="api-key-actions">
+                  <button class="btn btn-secondary">Regenerate</button>
+                  <button class="btn btn-danger">Revoke</button>
+                </div>
+              </div>
+              
+              <div class="api-key-info">
+                <p>Use this API key to access the JazS API programmatically. Keep this key secure and do not share it.</p>
+                <p>Documentation: <a href="#">API Documentation</a></p>
+              </div>
+            </div>
+          </section> -->
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script src="/js/settings.js"></script>
+  </body>
+</html>
+

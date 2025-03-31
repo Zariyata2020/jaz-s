@@ -1,0 +1,167 @@
+/* Shadow Data Page Styles */
+.shadow-data-container {
+  padding: 20px;
+}
+
+.shadow-data-info {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.shadow-data-info h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--accent-color);
+}
+
+.shadow-data-info ul {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.shadow-data-info li {
+  margin-bottom: 8px;
+}
+
+.shadow-data-scan {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.shadow-data-scan h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--accent-color);
+}
+
+.shadow-data-results {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.shadow-data-results h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--accent-color);
+}
+
+.results-summary {
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.results-details h3 {
+  margin-bottom: 15px;
+}
+
+.findings-list {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.finding-item {
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.finding-item.critical {
+  border-left: 4px solid #f44336;
+}
+
+.finding-item.high {
+  border-left: 4px solid #ff9800;
+}
+
+.finding-item.medium {
+  border-left: 4px solid #ffeb3b;
+}
+
+.finding-item.low {
+  border-left: 4px solid #4caf50;
+}
+
+.finding-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.finding-type {
+  font-weight: 500;
+}
+
+.finding-severity {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.finding-severity.critical {
+  background-color: #f44336;
+  color: white;
+}
+
+.finding-severity.high {
+  background-color: #ff9800;
+  color: white;
+}
+
+.finding-severity.medium {
+  background-color: #ffeb3b;
+  color: #333;
+}
+
+.finding-severity.low {
+  background-color: #4caf50;
+  color: white;
+}
+
+.finding-description {
+  margin-bottom: 10px;
+}
+
+.finding-location {
+  font-family: monospace;
+  background-color: var(--bg-primary);
+  padding: 5px 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.finding-context {
+  font-family: monospace;
+  background-color: var(--bg-primary);
+  padding: 10px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.results-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .finding-header {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+

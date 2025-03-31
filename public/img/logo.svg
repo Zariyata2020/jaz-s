@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="45" fill="url(#gradient)" />
+  <path d="M50 20 L70 35 L70 65 L50 80 L30 65 L30 35 Z" fill="none" stroke="white" stroke-width="3" />
+  <text x="50" y="58" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white">JazS</text>
+</svg>
+

@@ -1,0 +1,174 @@
+/* API Security Page Styles */
+.api-security-container {
+  padding: 20px;
+}
+
+.api-security-info {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.api-security-scan {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.api-endpoints {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.endpoint-item {
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.endpoint-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.endpoint-path {
+  font-weight: 500;
+  font-family: monospace;
+}
+
+.endpoint-method {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.endpoint-method.get {
+  background-color: #4caf50;
+  color: white;
+}
+
+.endpoint-method.post {
+  background-color: #2196f3;
+  color: white;
+}
+
+.endpoint-method.put {
+  background-color: #ff9800;
+  color: white;
+}
+
+.endpoint-method.delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.endpoint-details {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.endpoint-detail {
+  font-size: 0.9rem;
+}
+
+.endpoint-vulnerabilities {
+  margin-top: 10px;
+}
+
+.vulnerability-item {
+  background-color: var(--bg-primary);
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+.vulnerability-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.vulnerability-type {
+  font-weight: 500;
+}
+
+.vulnerability-severity {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.vulnerability-severity.high {
+  background-color: #f44336;
+  color: white;
+}
+
+.vulnerability-severity.medium {
+  background-color: #ff9800;
+  color: white;
+}
+
+.vulnerability-severity.low {
+  background-color: #4caf50;
+  color: white;
+}
+
+.scan-form {
+  margin-top: 15px;
+}
+
+.scan-results {
+  margin-top: 20px;
+  display: none;
+}
+
+.scan-results.active {
+  display: block;
+}
+
+.results-summary {
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.results-findings {
+  margin-bottom: 15px;
+}
+
+.results-recommendations {
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.results-recommendations ul {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .endpoint-header {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .endpoint-details {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
